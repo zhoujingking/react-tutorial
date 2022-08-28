@@ -18,12 +18,17 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     static: path.resolve('dist'),
+    hot: true,
   },
   module: {
     rules: [
       {
         test: /\.scss$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
       {
         test: /\.(js|jsx)$/i,
@@ -42,7 +47,17 @@ module.exports = {
       template: path.resolve(__dirname + '/public', 'index.html')
     }),
     new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css'
+      filename: '[name].css',
+      chunkFilename: '[id].css',
+      linkType: 'text/css'
     }),
-  ]
+  ],
+  optimization: {
+    runtimeChunk: 'single'
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  }
 }

@@ -1,0 +1,18 @@
+.layout {
+  grid-template-columns: auto 300px;
+  grid-template-rows: 50px auto 40px;
+  grid-template-areas: 'header header' 'main side' 'footer footer';
+  height: 100%;
+  .header-bar {
+    grid-area: header;
+  }
+  .main-content {
+    grid-area: main;
+  }
+  .side-bar {
+    grid-area: side;
+  }
+  .footer-bar {
+    grid-area: footer;
+  }
+}
