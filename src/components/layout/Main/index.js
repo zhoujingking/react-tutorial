@@ -1,9 +1,11 @@
 import React from 'react'
 
+import TexasHoldem from '@/components/TexasHoldem';
+
 function Main() {
   return (
     <main className="main-content">
-      Main content
+      <TexasHoldem />
     </main>
   )
 }
