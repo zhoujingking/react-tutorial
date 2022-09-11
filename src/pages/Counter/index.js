@@ -2,14 +2,14 @@ import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { increment, decrement } from "../../store/slice/counterSlice";
+
 const countReducerAsync = () => {
   return (dispatch, getState) => {
     const state = getState();
     console.log(state)
     setTimeout(() => {
-      dispatch({
-        type: 'INCREMENT'
-      })
+      dispatch(increment())
     }, 1000)    
   }
 }
@@ -17,13 +17,9 @@ const countReducerAsync = () => {
 export default function Counter() {
   const count = useSelector(state => state.count);
   const dispatch = useDispatch();
-  const onIncrement = () => dispatch({
-    type: 'INCREMENT'
-  });
+  const onIncrement = () => dispatch(increment());
   const onIncrementAsync = () => dispatch(countReducerAsync());
-  const onDecrement = () => dispatch({
-    type: 'DECREMENT'
-  });
+  const onDecrement = () => dispatch(decrement());
   return (
     <>
       <h1>Redux counter demo page</h1>
