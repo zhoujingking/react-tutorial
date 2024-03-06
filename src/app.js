@@ -1,37 +1,69 @@
-import React from 'react';
-import './app.scss'
+import React, { memo, useEffect, useMemo, useState } from 'react';
+import axios from 'axios'
 
-import HeaderBar from '@/components/layout/HeaderBar';
-import Main from '@/components/layout/Main';
-import FooterBar from '@/components/layout/FooterBar';
-import SideBar from '@/components/layout/SideBar';
+const squareFn = (n) => {
+  console.log('squareFn update')
+  return n * n;
+}
+const CompB = ({n}) => {
+  console.log('comp B update')
+  return (
+    <div>comp b - { n * n} </div>
+  )
+}
 
-import UserContext from '@/context/UserContext';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userInfo: {
-        username: 'godking',
-        email: 'godking@jsfund.cn',
-        userId: 132,
-      }
-    }
+
+
+function App() {
+  console.log('app')
+
+  const [value, setValue] = useState(0);
+
+  const [n, setN] = useState(100);
+
+
+  const square = useMemo(() => squareFn(n), [n]);
+  const CompBMemo = useMemo(() => CompB, []);
+
+  const onClick = () => {
+    setValue(val => val + 1);
   }
 
-  render() {
-    return (
-      <UserContext.Provider value={this.state.userInfo}>
-        <div className="layout grid">
-          <HeaderBar />
-          <Main />
-          <SideBar />
-          <FooterBar />
-        </div>
-      </UserContext.Provider>
-    )
+  const sendRequest = () => {
+    // axios.post('/api/user', {
+    //   name: 'godking',
+    //   age: 10
+    // })
+
+    axios.post('/api/login', {
+      username: 'godking',
+      password: 'pwd'
+    })
+
+    // axios.get('/api/user/1', {
+    //   headers: {
+    //     Authorization: 'test'
+    //   }
+    // })
+
+    // // axios.delete('/api/user/2')
+
+    // axios.get('/api/book/23jlsf-sfda-asfdasdf', {
+    //   headers: {
+    //     Authorization: 'test'
+    //   }
+    // })
   }
+
+  return (
+    <div>
+      <CompBMemo n={100}/>
+      <button onClick={onClick}> click - {square}</button>
+      <button onClick={() => setN(n => n + 1)}> change n</button>
+      <button onClick={sendRequest} >send request</button>
+    </div>
+  )
 }
 
 export default App;

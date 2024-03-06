@@ -1,4 +1,3 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -19,6 +18,10 @@ module.exports = {
   devServer: {
     static: path.resolve('dist'),
     hot: true,
+    proxy: {
+      '/api': 'http://localhost:8080'
+    },
+    port: 9000
   },
   module: {
     rules: [
